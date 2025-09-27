@@ -1,6 +1,6 @@
 # app.py
 # This is the backend server for our AI Smart Companion.
-# It uses Flask to create a simple API that our frontend website can talk to.
+# It uses Flask to create a simple API that the frontend website can talk to.
 # The core logic involves receiving a message, passing it to the Gemini agent,
 # and handling the agent's decision to use tools.
 
@@ -50,9 +50,9 @@ When using the 'send_emergency_alert' tool, confirm with the user before sending
 # and most importantly, we declare the list of Python functions from tools.py that it's allowed to use.
 # The model will read the docstrings of these functions to understand what they do.
 model = genai.GenerativeModel(
-    model_name='gemini-1.5-pro-latest',
+    model_name='gemini-2.5-pro',
     system_instruction=SYSTEM_PROMPT,
-    tools=[
+    tools=[ #Functions created for the chatbot to use
         tools.get_reminders,
         tools.get_weather,
         tools.send_emergency_alert

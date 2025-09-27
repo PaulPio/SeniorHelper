@@ -118,7 +118,7 @@ def send_emergency_alert(reason: str):
         # This is the line that actually sends the SMS.
         message = client.messages.create(
             to=emergency_contact,    # The number we are sending the message to.
-            from_=twilio_phone,      # Our special Twilio phone number.
+            from_=twilio_phone,      # Special Twilio phone number.
             body=message_body
         )
         
