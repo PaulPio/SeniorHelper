@@ -103,7 +103,7 @@ def send_emergency_alert(reason: str):
 
 
 """
-### **How the Backend Developer Should Use This File:**
+    How to use this file :
 
 1.  **Save this code** as `tools.py` in your project folder.
 2.  **Create the `.env` file** in the same folder and fill in all the required API keys and phone numbers.

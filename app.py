@@ -120,7 +120,7 @@ if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
 
 """
-### **How to Use This File (For the Backend Developer):**
+### **How to Use This File:**
 
 1.  **Save this code** as `app.py` in the same folder as your `tools.py` and `.env` files.
 2.  **Make sure your virtual environment is active.**
