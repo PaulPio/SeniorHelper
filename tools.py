@@ -1,17 +1,17 @@
 # tools.py
-# This file contains the individual "tools" that our AI agent can use.
+# This file contains the individual tools that our AI agent can use.
 # Each function is a self-contained capability, like sending a text or fetching data.
 # The Gemini model will read the docstring of each function to understand its purpose.
 
 # Standard library imports
-import os  # Used to access environment variables (our secret API keys)
+import os  # Used to access environment variables ( API keys)
 from datetime import datetime  # Used to get the current date for dynamic reminders
 
 # Third-party library imports
-import requests  # A popular library for making HTTP requests to APIs (like OpenWeatherMap)
+import requests  # A popular library for making HTTP requests to APIs ( OpenWeatherMap)
 from twilio.rest import Client  # The official Twilio library to make sending SMS messages easy
 
-# --- Tool 1: Get Today's Reminders ---
+#  Tool 1: Get Today's Reminders 
 def get_reminders():
     """
     Retrieves a list of pre-defined medication and appointment reminders for the current day.

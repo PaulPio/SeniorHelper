@@ -1,5 +1,5 @@
 # app.py
-# This is the backend server for our AI Smart Companion.
+# This is the backend server for AI Smart Companion.
 # It uses Flask to create a simple API that our frontend website can talk to.
 # The core logic involves receiving a message, passing it to the Gemini agent,
 # and handling the agent's decision to use tools.
@@ -29,7 +29,7 @@ if not gemini_api_key:
     raise ValueError("GEMINI_API_KEY not found in .env file.")
 genai.configure(api_key=gemini_api_key)
 
-# --- AGENT CONFIGURATION ---
+#  AGENT CONFIGURATION 
 
 # Define the system prompt for the agent's persona and instructions
 SYSTEM_PROMPT = """

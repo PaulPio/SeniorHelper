@@ -1,5 +1,5 @@
 AI Smart Companion for Seniors
-A conversational AI agent built during a 24-hour hackathon to provide senior citizens with a simple, voice-first way to manage their day and get help in emergencies.
+A conversational AI agent built during a 2364-hour hackathon to provide senior citizens with a simple way to manage their day and get help in emergencies.
 
 Live Demo
 You can interact with our live, deployed application here:
@@ -43,7 +43,7 @@ Deployment: Render (for backend), Netlify (for frontend), GitHub (for version co
 
 Features we wanted to add but did not have time for it:
     - Proactive Tech & Wellness Tips
-    - Family Portal & Personalization
+    - Login Feature
     - Quick-Action Buttons
 
 How to Run This Project Locally
