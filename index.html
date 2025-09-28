@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en">go
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Chat Interface - Frontend Prototype</title>
+    <title>AI Chat Interface - Frontend</title>
     <script src="https://cdn.tailwindcss.com"></script>
     
     <script>
@@ -11,8 +11,8 @@
             theme: {
                 extend: {
                     colors: {
-                        'primary': '#4f46e5', // Indigo
-                        'secondary': '#f3f4f6', // Gray-100
+                        'primary': '#4f46e5', 
+                        'secondary': '#f3f4f6', 
                     }
                 }
             }
@@ -34,7 +34,7 @@
             
             <div class="flex justify-start">
                 <div class="bg-indigo-200 text-gray-800 p-3 rounded-lg max-w-xs shadow-md">
-                    <p>Hello! I am ready to assist you. Ask me anything.</p>
+                    <p>Hello! I am ready to assist you. Please ask me anything.</p>
                 </div>
             </div>
 
@@ -63,17 +63,12 @@
     </div>
 
     <script>
-        // --- Configuration ---
-        // REPLACE THIS with the actual URL from the DevOps lead
-        const BACKEND_URL = 'https://your-backend-api.com/chat'; 
-        // ---------------------
-
-        // DOM Element References
+        const BACKEND_URL = 'https://seniorhelper.onrender.com'; 
+1
         const chatWindow = document.getElementById('chat-window');
         const userInput = document.getElementById('user-input');
         const sendButton = document.getElementById('send-button');
 
-        // Helper function to create and append a new message bubble
         function appendMessage(content, isUser) {
             const messageWrapper = document.createElement('div');
             const messageBubble = document.createElement('div');
@@ -83,9 +78,7 @@
                 messageBubble.className = 'bg-primary text-white p-3 rounded-lg max-w-xs shadow-md';
             } else {
                 messageWrapper.className = 'flex justify-start';
-                // Add a unique ID for the bot's "thinking" indicator to easily remove it later
                 messageBubble.id = content === 'Thinking...' ? 'thinking-indicator' : ''; 
-                // Use a different color for errors
                 const isError = content.startsWith('Error:');
                 messageBubble.className = isError 
                     ? 'bg-red-400 text-white p-3 rounded-lg max-w-xs shadow-md'
@@ -96,20 +89,16 @@
             messageWrapper.appendChild(messageBubble);
             chatWindow.appendChild(messageWrapper);
             
-            // Auto-scroll to the latest message
             chatWindow.scrollTop = chatWindow.scrollHeight;
         }
         
-        // Function to remove the "Thinking..." indicator
         function removeThinkingIndicator() {
             const thinkingIndicator = document.getElementById('thinking-indicator');
             if (thinkingIndicator) {
-                // Remove the entire message wrapper div
                 thinkingIndicator.parentElement.remove();
             }
         }
 
-        // Main function to handle the chat interaction and API call
         async function handleSendMessage() {
             const messageText = userInput.value.trim();
             
@@ -117,15 +106,13 @@
                 return; 
             }
 
-            // 1. Setup UI State
             appendMessage(messageText, true);
             userInput.value = '';
             sendButton.disabled = true;
             userInput.disabled = true;
-            appendMessage('Thinking...', false); // Show thinking state
+            appendMessage('Thinking...', false); 
 
             try {
-                // 2. Perform the API call using fetch()
                 const response = await fetch(BACKEND_URL, {
                     method: 'POST',
                     headers: {
@@ -134,26 +121,20 @@
                     body: JSON.stringify({ message: messageText })
                 });
 
-                // 3. Handle HTTP errors (e.g., 404, 500 status codes)
                 if (!response.ok) {
                     throw new Error(`HTTP Error: ${response.status} ${response.statusText}`);
                 }
 
-                // 4. Parse the JSON response
                 const data = await response.json();
                 
-                // 5. Display the received message (assuming the backend returns { "response": "..." })
                 const botResponse = data.response || "I received your message, but the response format was unexpected.";
                 appendMessage(botResponse, false);
 
             } catch (error) {
-                // 6. Handle network and other errors
                 console.error('API Error:', error);
-                // Display a user-friendly error message
                 appendMessage(`Error: Could not connect to the assistant. Please check the backend service.`, false);
                 
             } finally {
-                // 7. Reset UI State regardless of success or failure
                 removeThinkingIndicator();
                 sendButton.disabled = false;
                 userInput.disabled = false;
@@ -161,7 +142,6 @@
             }
         }
 
-        // Event Listeners for activation
         sendButton.addEventListener('click', handleSendMessage);
         userInput.addEventListener('keypress', (event) => {
             if (event.key === 'Enter') {
