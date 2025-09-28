@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">go
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,21 +18,47 @@
             }
         }
     </script>
+    <style>
+        #restart-button:hover {
+            opacity: 0.8;
+        }
+        #end-chat-button {
+            transition: background-color 0.15s ease-in-out;
+        }
+    </style>
 </head>
 
 <body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
 
-    <div class="w-full max-w-lg bg-white shadow-xl rounded-xl flex flex-col h-[80vh] overflow-hidden">
+    <div id="chat-interface" class="w-full max-w-lg bg-white shadow-xl rounded-xl flex flex-col h-[80vh] overflow-hidden">
         
-        <header class="p-4 border-b border-gray-200 bg-primary rounded-t-xl">
-            <h1 class="text-xl font-semibold text-white">
-                <span class="font-bold">Chat</span>Bot Assistant
+        <header class="p-4 border-b border-gray-200 bg-primary rounded-t-xl flex justify-between items-center">
+            <h1 class="text-xl font-semibold text-white mr-auto">
+                <span class="font-bold">Senior</span>Helper 
             </h1>
+            
+            <div class="flex space-x-3">
+                <button 
+                    id="restart-button" 
+                    class="text-white text-2xl p-1 rounded-full leading-none transition duration-150 ease-in-out"
+                    aria-label="Restart chat session"
+                    title="Restart Chat"
+                >
+                    &#x21bb; </button>
+
+                <button 
+                    id="end-chat-button" 
+                    class="bg-red-500 text-white font-semibold py-1 px-3 text-sm rounded-lg hover:bg-red-600"
+                    aria-label="End chat session"
+                >
+                    End Chat
+                </button>
+            </div>
         </header>
 
         <main id="chat-window" class="flex-grow p-4 space-y-4 overflow-y-auto bg-gray-50">
             
-            <div class="flex justify-start">
+            <div id="initial-message" class="flex justify-start">
                 <div class="bg-indigo-200 text-gray-800 p-3 rounded-lg max-w-xs shadow-md">
                     <p>Hello! I am ready to assist you. Please ask me anything.</p>
                 </div>
@@ -64,10 +90,14 @@
 
     <script>
         const BACKEND_URL = 'https://seniorhelper.onrender.com'; 
-1
+
+        // Existing Chat DOM Elements
         const chatWindow = document.getElementById('chat-window');
         const userInput = document.getElementById('user-input');
         const sendButton = document.getElementById('send-button');
+        const restartButton = document.getElementById('restart-button');
+        const endChatButton = document.getElementById('end-chat-button');
+
 
         function appendMessage(content, isUser) {
             const messageWrapper = document.createElement('div');
@@ -100,6 +130,11 @@
         }
 
         async function handleSendMessage() {
+            // Check if the input is disabled (chat ended)
+            if (userInput.disabled) {
+                return;
+            }
+
             const messageText = userInput.value.trim();
             
             if (messageText === "") {
@@ -128,26 +163,75 @@
                 const data = await response.json();
                 
                 const botResponse = data.response || "I received your message, but the response format was unexpected.";
+                removeThinkingIndicator();
                 appendMessage(botResponse, false);
 
             } catch (error) {
                 console.error('API Error:', error);
+                removeThinkingIndicator();
                 appendMessage(`Error: Could not connect to the assistant. Please check the backend service.`, false);
                 
             } finally {
-                removeThinkingIndicator();
                 sendButton.disabled = false;
                 userInput.disabled = false;
                 userInput.focus();
             }
         }
 
+        function handleRestartChat() {
+            chatWindow.innerHTML = ''; // Clear all messages
+            
+            // Re-enable input and send button
+            userInput.disabled = false;
+            sendButton.disabled = false;
+            sendButton.textContent = 'Send'; // Reset button text
+            endChatButton.textContent = 'End Chat'; // Reset End button text
+            endChatButton.classList.remove('bg-gray-500', 'hover:bg-gray-600');
+            endChatButton.classList.add('bg-red-500', 'hover:bg-red-600');
+
+            // Recreate and append the initial welcome message
+            appendMessage('Hello! I am ready to assist you. Please ask me anything.', false);
+            
+            userInput.value = ''; 
+            userInput.focus(); 
+        }
+
+        
+        function handleEndChat() {
+            // Display the final thank you message
+            appendMessage('Thank you for chatting with me. I hope you have a great day!', false);
+
+            // Disable all interaction
+            userInput.disabled = true;
+            sendButton.disabled = true;
+            userInput.value = "Chat ended. Click 'Restart' to begin a new session.";
+
+            sendButton.textContent = 'Ended';
+            endChatButton.textContent = 'Ended';
+            endChatButton.classList.remove('bg-red-500', 'hover:bg-red-600');
+            endChatButton.classList.add('bg-gray-500', 'hover:bg-gray-600');
+
+            // Clear focus
+            userInput.blur();
+        }
+
+        
+
         sendButton.addEventListener('click', handleSendMessage);
+        restartButton.addEventListener('click', handleRestartChat); 
+        endChatButton.addEventListener('click', handleEndChat); 
+
         userInput.addEventListener('keypress', (event) => {
             if (event.key === 'Enter') {
                 handleSendMessage();
             }
         });
+
+        // Set initial focus when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            userInput.focus();
+        });
+
     </script>
 </body>
 </html>
