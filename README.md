@@ -6,6 +6,9 @@ You can interact with our live, deployed application here:
 
 https://seniorhelper.netlify.app/
 
+You can also check a video of the demo in action here:
+https://www.youtube.com/watch?v=mBz7OSK-2kA
+
 The Problem Statement
 As family members live farther apart and daily life becomes more complex, senior citizens living independently face significant challenges. They often juggle multiple medications and appointments while navigating technology that can be confusing and inaccessible. This can lead to missed medications, social isolation, and critical delays in getting help during an emergency.
 
@@ -42,7 +45,7 @@ APIs & Services: Twilio (for SMS), OpenWeatherMap (for weather)
 Deployment: Render (for backend), Netlify (for frontend), GitHub (for version control)
 
 Features we wanted to add but did not have time for it:
-    - Proactive Tech & Wellness Tips
+    - Tech & Wellness Tips
     - Login Feature
     - Quick-Action Buttons
 
@@ -57,5 +60,5 @@ cd [project-folder]
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
-# Create a .env file and add your API keys
+Create a .env file and add your API keys
 flask run
