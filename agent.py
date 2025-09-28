@@ -43,7 +43,7 @@ When using the 'send_emergency_alert' tool, confirm with the user before sending
 
 # Initialize the Gemini model with the system prompt and declare the available tools
 model = genai.GenerativeModel(
-    model_name='gemini-1.5-pro-latest',
+    model_name='gemini-2.5-flash',
     system_instruction=SYSTEM_PROMPT,
     tools=[
         tools.get_reminders,
